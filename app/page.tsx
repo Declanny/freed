@@ -1,101 +1,331 @@
-import Image from "next/image";
+"use client";
+
+import { 
+  AiOutlineArrowDown, 
+  AiOutlineArrowUp, 
+  AiOutlineCreditCard, 
+  AiOutlineWallet, 
+  AiOutlineSend, 
+  AiOutlineDownload,
+  AiOutlineTrophy,
+  AiOutlineMoneyCollect,
+  AiOutlineDesktop,
+  AiOutlineVideoCamera
+  
+
+ } from 'react-icons/ai'; 
+import { CartesianGrid, Line, LineChart, XAxis, Tooltip, ResponsiveContainer } from 'recharts'; // Recharts for charting
+import { useState } from 'react';
+
+// Sample data for different views
+const weeklyData = [
+  { day: "Mon", income: 24000, spending: 18000 },
+  { day: "Tue", income: 30000, spending: 20000 },
+  { day: "Wed", income: 25000, spending: 15000 },
+  { day: "Thu", income: 40000, spending: 30000 },
+  { day: "Fri", income: 35000, spending: 55000 },
+  { day: "Sat", income: 45000, spending: 35000 },
+  { day: "Sun", income: 50000, spending: 40000 },
+];
+
+const monthlyData = [
+  { month: "Jan", income: 240000, spending: 180000 },
+  { month: "Feb", income: 300000, spending: 200000 },
+  { month: "Mar", income: 250000, spending: 150000 },
+  { month: "Apr", income: 400000, spending: 300000 },
+  { month: "May", income: 350000, spending: 250000 },
+  { month: "Jun", income: 450000, spending: 650000 },
+  { month: "Jul", income: 240000, spending: 180000 },
+  { month: "Aug", income: 300000, spending: 200000 },
+  { month: "Sep", income: 250000, spending: 150000 },
+  { month: "Oct", income: 400000, spending: 300000 },
+  { month: "Nov", income: 350000, spending: 250000 },
+  { month: "Dec", income: 450000, spending: 350000 },
+];
+
+const yearlyData = [
+  { year: "2015", income: 2400000, spending: 1800000 },
+  { year: "2016", income: 3000000, spending: 2000000 },
+  { year: "2017", income: 500000, spending: 1000000 },
+  { year: "2018", income: 2400000, spending: 1800000 },
+  { year: "2019", income: 3000000, spending: 3500000 },
+  { year: "2020", income: 2500000, spending: 1500000 },
+  { year: "2021", income: 2400000, spending: 2800000 },
+  { year: "2022", income: 3000000, spending: 2000000 },
+  { year: "2023", income: 2500000, spending: 3500000 }
+];
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [view, setView] = useState("weekly"); // State to manage the selected view
+  const [chartData, setChartData] = useState(weeklyData); // Default data for weekly view
+  
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handleViewChange = (selectedView) => {
+    setView(selectedView);
+    if (selectedView === "weekly") {
+      setChartData(weeklyData);
+    } else if (selectedView === "monthly") {
+      setChartData(monthlyData);
+    } else {
+      setChartData(yearlyData);
+    }
+  };
+
+  return (
+    <div className="grid grid-cols-3 gap-2 p-3 w-full -mt-6">
+      {/* Existing Containers */}
+      <div className="bg-white shadow-lg rounded-lg p-4 col-span-1">
+        {/* Income Card */}
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold">Income</h3>
+          <AiOutlineArrowDown className="text-green-500 text-xl" />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <p className="mt-2 text-2xl font-bold text-green-600">₦500,000</p>
+        <div className="flex justify-between items-center mt-4">
+          <span className="text-gray-500">+12.5% Increase</span>
+          <div className="bg-green-100 p-2 rounded-full">
+            <AiOutlineArrowDown className="text-green-500" />
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white shadow-lg rounded-lg p-4 col-span-1">
+        {/* Spending Card */}
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold">Spending</h3>
+          <AiOutlineArrowUp className="text-red-500 text-xl" />
+        </div>
+        <p className="mt-2 text-2xl font-bold text-red-600">₦200,000</p>
+        <div className="flex justify-between items-center mt-4">
+          <span className="text-gray-500">-8.3% Decrease</span>
+          <div className="bg-red-100 p-2 rounded-full">
+            <AiOutlineArrowUp className="text-red-500" />
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-white h-[400px] col-span-2 shadow-lg rounded-lg p-4">
+        {/* Dashboard with Statistics */}
+        <div className="flex justify-between items-center">
+          <h2 className="text-xl font-bold">Statistics</h2>
+          <div className="flex gap-2">
+            <button 
+              className={`bg-gray-200 p-2 rounded ${view === 'weekly' ? 'bg-gray-400' : ''}`}
+              onClick={() => handleViewChange('weekly')}
+            >
+              Weekly
+            </button>
+            <button 
+              className={`bg-gray-200 p-2 rounded ${view === 'monthly' ? 'bg-gray-400' : ''}`}
+              onClick={() => handleViewChange('monthly')}
+            >
+              Monthly
+            </button>
+            <button 
+              className={`bg-gray-200 p-2 rounded ${view === 'yearly' ? 'bg-gray-400' : ''}`}
+              onClick={() => handleViewChange('yearly')}
+            >
+              Yearly
+            </button>
+          </div>
+        </div>
+        <p className="text-sm text-gray-500 mt-2">Average Expenses: ₦24,000</p>
+        <div className="flex mt-4">
+          <span className="flex items-center text-green-600">
+            <span className="w-2 h-2 bg-green-600 rounded-full mr-1"></span>
+            Income
+          </span>
+          <span className="flex items-center text-red-600 ml-4">
+            <span className="w-2 h-2 bg-red-600 rounded-full mr-1"></span>
+            Spending
+          </span>
+        </div>
+
+        {/* Line Chart */}
+<div className="w-full h-72 md:h-80 lg:h-96">  {/* Full width with responsive height */}
+  <ResponsiveContainer width="100%" height="74%">
+    <LineChart data={chartData}>
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey={view === 'weekly' ? 'day' : view === 'monthly' ? 'month' : 'year'} />
+      <Tooltip />
+      <Line 
+        type="monotone" 
+        dataKey="income" 
+        stroke="#82ca9d" 
+        strokeWidth={4} // Increased for thicker line
+        dot={{ fill: '#82ca9d' }} 
+      />
+      <Line 
+        type="monotone" 
+        dataKey="spending" 
+        stroke="#ff6347" 
+        strokeWidth={4} // Increased for thicker line
+        dot={{ fill: '#ff6347' }} 
+      />
+    </LineChart>
+  </ResponsiveContainer>
+</div>
+
+  
+      </div>
+
+      <div className=" bg-green-600 h-[559px] col-span-1 -mt-40 p-4">
+  {/* Card Balance Section */}
+  <div className="bg-white bg-opacity-80 shadow-lg rounded-lg p-4 mb-4">
+
+    <div className="flex justify-between items-center">
+      <h4 className="text-lg font-semibold">Balance</h4>
+      <span className="text-sm text-gray-500 cursor-pointer">See Detail</span>
+    </div>
+    <p className="text-3xl font-bold text-center my-1">₦150,000</p>
+    <p className="text-sm text-gray-500 text-center">From Three Cards</p>
+    {/* Divider */}
+    <hr className="border-gray-300 my-4" />
+    {/* Add Card Section */}
+    <div className="flex justify-between items-center">
+      <h4 className="text-lg font-semibold">My Cards</h4>
+      <div className="flex items-center gap-1 text-blue-500 cursor-pointer">
+      <span className="text-2xl  relative" style={{ top: '-2px' }}>+</span> {/* Moved up slightly */}
+      <span className="text-sm">Add New Card</span>
+      </div>
+    </div>
+  </div>
+{/* Debit Cards Section */}
+<div className="overflow-hidden">
+  <div className="flex space-x-4 w-full overflow-x-auto snap-x snap-mandatory">
+    {/* Card 1 */}
+    <div className="relative w-[80%] h-[166px] snap-center flex-shrink-0 rounded-lg overflow-hidden">
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'url("https://res.cloudinary.com/dqbbm0guw/image/upload/v1728472277/Card_1_Mask_hqea4t.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.7, // Adjust opacity to show the shadow effect
+        }}
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-green-800 to-green-600"
+        style={{ opacity: 0.5 }} // Adjust the gradient opacity
+      />
+      <div className="relative z-10 p-4 text-white">
+        <h4 className="text-lg font-semibold mb-2">Visa</h4>
+        <p className="mt-2">**** **** **** 1234</p>
+        <p className="text-sm mt-2">Exp: 12/25</p>
+      </div>
+    </div>
+
+    {/* Card 2 */}
+    <div className="relative w-[80%] h-[166px] snap-center flex-shrink-0 rounded-lg overflow-hidden">
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'url("https://res.cloudinary.com/dqbbm0guw/image/upload/v1728472277/Card_1_Mask_hqea4t.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.7, // Adjust opacity to show the shadow effect
+        }}
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-blue-800 to-blue-600"
+        style={{ opacity: 0.5 }} // Adjust the gradient opacity
+      />
+      <div className="relative z-10 p-4 text-white">
+        <h4 className="text-lg font-semibold mb-2">MasterCard</h4>
+        <p className="mt-2">**** **** **** 5678</p>
+        <p className="text-sm mt-2">Exp: 01/26</p>
+      </div>
+    </div>
+
+    {/* Card 3 */}
+    <div className="relative w-[80%] h-[166px] snap-center flex-shrink-0 rounded-lg overflow-hidden">
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: 'url("https://res.cloudinary.com/dqbbm0guw/image/upload/v1728472277/Card_1_Mask_hqea4t.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.7, // Adjust opacity to show the shadow effect
+        }}
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-red-800 to-red-600"
+        style={{ opacity: 0.5 }} // Adjust the gradient opacity
+      />
+      <div className="relative z-10 p-4 text-white">
+        <h4 className="text-lg font-semibold mb-2">Discover</h4>
+        <p className="mt-2">**** **** **** 9012</p>
+        <p className="text-sm mt-2">Exp: 03/24</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{/* Payment Options Section */}
+<div className="grid grid-cols-4 gap-4 mt-4">
+  <div className="flex flex-col items-center">
+    <div className="bg-green-800 shadow-md shadow-green-900 p-2 rounded-lg">
+      <AiOutlineCreditCard className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">Pay</p>
+  </div>
+  
+  <div className="flex flex-col items-center">
+    <div className="bg-blue-600 shadow-md shadow-blue-800 p-2 rounded-lg">
+      <AiOutlineDownload className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">Request</p>
+  </div>
+  
+  <div className="flex flex-col items-center">
+    <div className="bg-yellow-500 shadow-md shadow-yellow-700 p-2 rounded-lg">
+      <AiOutlineSend className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">Send</p>
+  </div>
+  
+  <div className="flex flex-col items-center">
+    <div className="bg-purple-600 shadow-md shadow-purple-800 p-2 rounded-lg">
+      <AiOutlineWallet className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">Saving</p>
+  </div>
+
+  {/* New Betting Options Section */}
+  <div className="flex flex-col items-center">
+    <div className="bg-red-600 shadow-md shadow-red-800 p-2 rounded-lg">
+      <AiOutlineTrophy className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">Betting</p>
+  </div>
+  
+  <div className="flex flex-col items-center">
+    <div className="bg-orange-500 shadow-md shadow-orange-700 p-2 rounded-lg">
+      <AiOutlineMoneyCollect className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">Pay Bills</p>
+  </div>
+  
+  <div className="flex flex-col items-center">
+    <div className="bg-teal-600 shadow-md shadow-teal-800 p-2 rounded-lg">
+      <AiOutlineDesktop className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">Internet</p>
+  </div>
+  
+  <div className="flex flex-col items-center">
+    <div className="bg-gray-800 shadow-md shadow-gray-900 p-2 rounded-lg">
+      <AiOutlineVideoCamera className="text-xl text-white" />
+    </div>
+    <p className="text-xs mt-1 text-slate-950">TV</p>
+  </div>
+</div>
+
+</div>
+
     </div>
   );
 }
