@@ -1,4 +1,5 @@
 "use client";
+import TransactionHistory from '../components/TransactionHistory/TransactionHistory';
 
 import { 
   AiOutlineArrowDown, 
@@ -16,6 +17,7 @@ import {
  } from 'react-icons/ai'; 
 import { CartesianGrid, Line, LineChart, XAxis, Tooltip, ResponsiveContainer } from 'recharts'; // Recharts for charting
 import { useState } from 'react';
+
 
 // Sample data for different views
 const weeklyData = [
@@ -54,6 +56,39 @@ const yearlyData = [
   { year: "2022", income: 3000000, spending: 2000000 },
   { year: "2023", income: 2500000, spending: 3500000 }
 ];
+  
+// Sample data for transactions
+const transactions = [
+  {
+    id: 1,
+    name: 'Bank of America',
+    date: '2024-10-10',
+    time: '10:30 AM',
+    transactionCode: 'ABC123',
+    category: 'Subscription',
+    amount: '₦15,000',
+  },
+  {
+    id: 2,
+    name: 'PayPal',
+    date: '2024-10-09',
+    time: '11:45 AM',
+    transactionCode: 'XYZ789',
+    category: 'Transfer',
+    amount: '₦50,000',
+  },
+  {
+    id: 3,
+    name: 'Stripe',
+    date: '2024-10-08',
+    time: '02:15 PM',
+    transactionCode: 'LMN456',
+    category: 'Transfer',
+    amount: '₦30,000',
+  },
+];
+
+
 
 export default function Home() {
   const [view, setView] = useState("weekly"); // State to manage the selected view
@@ -72,6 +107,8 @@ export default function Home() {
   };
 
   return (
+
+    <div>
     <div className="grid grid-cols-3 gap-2 p-3 w-full -mt-6">
       {/* Existing Containers */}
       <div className="bg-white shadow-lg rounded-lg p-4 col-span-1">
@@ -178,7 +215,7 @@ export default function Home() {
       <span className="text-sm text-gray-500 cursor-pointer">See Detail</span>
     </div>
     <p className="text-3xl font-bold text-center my-1">₦150,000</p>
-    <p className="text-sm text-gray-500 text-center">From Three Cards</p>
+    <p className="text-s text-gray-500 text-center">From Three Cards</p>
     {/* Divider */}
     <hr className="border-gray-300 my-4" />
     {/* Add Card Section */}
@@ -323,7 +360,16 @@ export default function Home() {
     <p className="text-xs mt-1 text-slate-950">TV</p>
   </div>
 </div>
+ 
+</div>
 
+
+
+
+
+    </div>
+    <div className="container mx-auto p-4 w-full">
+  <TransactionHistory transactions={transactions} />
 </div>
 
     </div>
