@@ -24,7 +24,8 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions })
       </div>
       {/* Transaction Table */}
       <table className="min-w-full">
-        <thead>
+        <thead className="hidden md:table-header-group">
+          {/* Header is hidden on mobile */}
           <tr className="text-gray-500 text-sm bg-gray-100">
             <th className="py-2 pr-4 text-left">Name</th>
             <th className="py-2 pr-4 text-left">Date</th>

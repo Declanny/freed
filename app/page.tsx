@@ -57,7 +57,6 @@ const yearlyData = [
   { year: "2023", income: 2500000, spending: 3500000 }
 ];
   
-// Sample data for transactions
 const transactions = [
   {
     id: 1,
@@ -67,6 +66,7 @@ const transactions = [
     transactionCode: 'ABC123',
     category: 'Subscription',
     amount: '₦15,000',
+    logoUrl: 'https://res.cloudinary.com/dqbbm0guw/image/upload/v1728658691/boa_leppwa.png', // Add the actual logo URL
   },
   {
     id: 2,
@@ -76,17 +76,20 @@ const transactions = [
     transactionCode: 'XYZ789',
     category: 'Transfer',
     amount: '₦50,000',
+    logoUrl: 'https://res.cloudinary.com/dqbbm0guw/image/upload/v1728658926/paypal_cksz1w.png', // Add the actual logo URL
   },
   {
     id: 3,
-    name: 'Stripe',
+         name: 'Stripe',
     date: '2024-10-08',
     time: '02:15 PM',
     transactionCode: 'LMN456',
     category: 'Transfer',
     amount: '₦30,000',
+    logoUrl: 'https://res.cloudinary.com/dqbbm0guw/image/upload/v1728658691/stripe_ee2by3.webp', // Add the actual logo URL
   },
 ];
+
 
 
 
@@ -109,62 +112,85 @@ export default function Home() {
   return (
 
     <div>
-    <div className="grid grid-cols-3 gap-2 p-3 w-full -mt-6">
-      {/* Existing Containers */}
-      <div className="bg-white shadow-lg rounded-lg p-4 col-span-1">
-        {/* Income Card */}
-        <div className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Income</h3>
-          <AiOutlineArrowDown className="text-green-500 text-xl" />
-        </div>
-        <p className="mt-2 text-2xl font-bold text-green-600">₦500,000</p>
-        <div className="flex justify-between items-center mt-4">
-          <span className="text-gray-500">+12.5% Increase</span>
-          <div className="bg-green-100 p-2 rounded-full">
-            <AiOutlineArrowDown className="text-green-500" />
-          </div>
-        </div>
-      </div>
 
-      <div className="bg-white shadow-lg rounded-lg p-4 col-span-1">
-        {/* Spending Card */}
-        <div className="flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Spending</h3>
-          <AiOutlineArrowUp className="text-red-500 text-xl" />
-        </div>
-        <p className="mt-2 text-2xl font-bold text-red-600">₦200,000</p>
-        <div className="flex justify-between items-center mt-4">
-          <span className="text-gray-500">-8.3% Decrease</span>
-          <div className="bg-red-100 p-2 rounded-full">
-            <AiOutlineArrowUp className="text-red-500" />
-          </div>
-        </div>
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 p-3 w-full -mt-6">
+  {/* Existing Containers */}
+  <div className="bg-white shadow-lg rounded-lg p-4 col-span-1">
+    {/* Income Card */}
+    <div className="flex justify-between items-center">
+      <h3 className="text-lg font-semibold">Income</h3>
+      <AiOutlineArrowDown className="text-green-500 text-xl" />
+    </div>
+    <p className="mt-2 text-2xl font-bold text-green-600">₦500,000</p>
+    <div className="flex justify-between items-center mt-4">
+      <span className="text-gray-500">+12.5% Increase</span>
+      <div className="bg-green-100 p-2 rounded-full">
+        <AiOutlineArrowDown className="text-green-500" />
       </div>
+    </div>
+  </div>
 
-      <div className="bg-white h-[400px] col-span-2 shadow-lg rounded-lg p-4">
+  <div className="bg-white shadow-lg rounded-lg p-4 col-span-1">
+    {/* Spending Card */}
+    <div className="flex justify-between items-center">
+      <h3 className="text-lg font-semibold">Spending</h3>
+      <AiOutlineArrowUp className="text-red-500 text-xl" />
+    </div>
+    <p className="mt-2 text-2xl font-bold text-red-600">₦200,000</p>
+    <div className="flex justify-between items-center mt-4">
+      <span className="text-gray-500">-8.3% Decrease</span>
+      <div className="bg-red-100 p-2 rounded-full">
+        <AiOutlineArrowUp className="text-red-500" />
+      </div>
+    </div>
+  </div>
+
+
+
+  <div className="bg-white h-[310px] sm:h-[400px] col-span-2 shadow-lg rounded-lg p-4">
+
         {/* Dashboard with Statistics */}
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Statistics</h2>
-          <div className="flex gap-2">
-            <button 
-              className={`bg-gray-200 p-2 rounded ${view === 'weekly' ? 'bg-gray-400' : ''}`}
-              onClick={() => handleViewChange('weekly')}
-            >
-              Weekly
-            </button>
-            <button 
-              className={`bg-gray-200 p-2 rounded ${view === 'monthly' ? 'bg-gray-400' : ''}`}
-              onClick={() => handleViewChange('monthly')}
-            >
-              Monthly
-            </button>
-            <button 
-              className={`bg-gray-200 p-2 rounded ${view === 'yearly' ? 'bg-gray-400' : ''}`}
-              onClick={() => handleViewChange('yearly')}
-            >
-              Yearly
-            </button>
-          </div>
+          <div className="flex">
+
+<div className="flex justify-center">
+  <div className="bg-gray-200 rounded-3xl flex overflow-hidden shadow-lg">
+    {/* Weekly Button */}
+    <button
+      className={`px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base md:text-lg transition-colors duration-300 ${
+        view === 'weekly' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+      } rounded-l-3xl`}
+      onClick={() => handleViewChange('weekly')}
+    >
+      Weekly
+    </button>
+    
+    {/* Monthly Button */}
+    <button
+      className={`px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base md:text-lg transition-colors duration-300 ${
+        view === 'monthly' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+      }`}
+      onClick={() => handleViewChange('monthly')}
+    >
+      Monthly
+    </button>
+    
+    {/* Yearly Button */}
+    <button
+      className={`px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 text-sm sm:text-base md:text-lg transition-colors duration-300 ${
+        view === 'yearly' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+      } rounded-r-3xl`}
+      onClick={() => handleViewChange('yearly')}
+    >
+      Yearly
+    </button>
+  </div>
+</div>
+
+
+</div>
+
         </div>
         <p className="text-sm text-gray-500 mt-2">Average Expenses: ₦24,000</p>
         <div className="flex mt-4">
@@ -180,7 +206,7 @@ export default function Home() {
 
         {/* Line Chart */}
 <div className="w-full h-72 md:h-80 lg:h-96">  {/* Full width with responsive height */}
-  <ResponsiveContainer width="100%" height="74%">
+  <ResponsiveContainer width="100%" height="70%">
     <LineChart data={chartData}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey={view === 'weekly' ? 'day' : view === 'monthly' ? 'month' : 'year'} />
@@ -206,16 +232,16 @@ export default function Home() {
   
       </div>
 
-      <div className=" bg-green-600 h-[559px] col-span-1 -mt-40 p-4">
+  <div className="bg-green-600 h-[559px] col-span-1 -mt-40 p-4 hidden md:block">
   {/* Card Balance Section */}
-  <div className="bg-white bg-opacity-80 shadow-lg rounded-lg p-4 mb-4">
+  <div className="bg-lime-50 shadow-lg rounded-lg p-4 mb-4">
 
     <div className="flex justify-between items-center">
       <h4 className="text-lg font-semibold">Balance</h4>
       <span className="text-sm text-gray-500 cursor-pointer">See Detail</span>
     </div>
-    <p className="text-3xl font-bold text-center my-1">₦150,000</p>
-    <p className="text-s text-gray-500 text-center">From Three Cards</p>
+    <p className="text-3xl font-bold text-center my-1 ">₦150,000</p>
+    <p className="text-sm text-gray-500 text-center ">From Three Cards</p>
     {/* Divider */}
     <hr className="border-gray-300 my-4" />
     {/* Add Card Section */}
