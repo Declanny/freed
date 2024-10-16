@@ -86,7 +86,7 @@ const TransactionItem: React.FC<TransactionItemProps> = ({ transaction }) => {
         {transaction.category === 'Subscription' ? `- ${transaction.amount}` : `+ ${transaction.amount}`}
       </td>
       
-      {/* Action - Unhidden on mobile */}
+      {/* Action - Visible on mobile */}
       <td className="p-2 pr-4 text-center">
         <AiOutlineMore className="cursor-pointer text-xl" />
       </td>

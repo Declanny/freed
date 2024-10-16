@@ -9,6 +9,7 @@ interface Transaction {
   transactionCode: string;
   category: string;
   amount: string;
+  logoUrl: string; // Add logoUrl here
 }
 
 interface TransactionHistoryProps {
