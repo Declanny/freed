@@ -19,8 +19,15 @@ import { CartesianGrid, Line, LineChart, XAxis, Tooltip, ResponsiveContainer } f
 import { useState } from 'react';
 
 
+type ChartData = {
+  day?: string;
+  month?: string;
+  year?: string;
+  income: number;
+  spending: number;
+};
 // Sample data for different views
-const weeklyData = [
+const weeklyData: ChartData[] = [
   { day: "Mon", income: 24000, spending: 18000 },
   { day: "Tue", income: 30000, spending: 20000 },
   { day: "Wed", income: 25000, spending: 15000 },
@@ -30,7 +37,7 @@ const weeklyData = [
   { day: "Sun", income: 50000, spending: 40000 },
 ];
 
-const monthlyData = [
+const monthlyData: ChartData[] = [
   { month: "Jan", income: 240000, spending: 180000 },
   { month: "Feb", income: 300000, spending: 200000 },
   { month: "Mar", income: 250000, spending: 150000 },
@@ -45,7 +52,7 @@ const monthlyData = [
   { month: "Dec", income: 450000, spending: 350000 },
 ];
 
-const yearlyData = [
+const yearlyData: ChartData[] = [
   { year: "2015", income: 2400000, spending: 1800000 },
   { year: "2016", income: 3000000, spending: 2000000 },
   { year: "2017", income: 500000, spending: 1000000 },
@@ -94,11 +101,10 @@ const transactions = [
 
 
 export default function Home() {
-  const [view, setView] = useState("weekly"); // State to manage the selected view
-  const [chartData, setChartData] = useState(weeklyData); // Default data for weekly view
-  
+  const [view, setView] = useState<"weekly" | "monthly" | "yearly">("weekly"); // State to manage the selected view
+  const [chartData, setChartData] = useState<ChartData[]>(weeklyData); // Default data for weekly view
 
-  const handleViewChange = (selectedView) => {
+  const handleViewChange = (selectedView: "weekly" | "monthly" | "yearly") => {
     setView(selectedView);
     if (selectedView === "weekly") {
       setChartData(weeklyData);
